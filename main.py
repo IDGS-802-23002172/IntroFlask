@@ -66,12 +66,10 @@ def operas1():
 @app.route("/resultado", methods=["GET", "POST"])
 def resultado():
     if request.method == "POST":
-        # Obtener valores correctamente
         n1 = request.form.get("n1")
         n2 = request.form.get("n2")
         operacion = request.form.get("flexRadioDefault")
         
-        # Convertir a float para cálculos
         num1 = float(n1)
         num2 = float(n2)
         res = 0
@@ -80,7 +78,7 @@ def resultado():
             res = num1 + num2
         elif operacion == "resta":
             res = num1 - num2
-        elif operacion == "multi": # Debe coincidir con el value del HTML
+        elif operacion == "multi": 
             res = num1 * num2
         elif operacion == "division":
             if num2 != 0:
