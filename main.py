@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import math
 
 app=Flask(__name__)
 
@@ -66,12 +67,10 @@ def operas1():
 @app.route("/resultado", methods=["GET", "POST"])
 def resultado():
     if request.method == "POST":
-        # Obtener valores correctamente
         n1 = request.form.get("n1")
         n2 = request.form.get("n2")
         operacion = request.form.get("flexRadioDefault")
         
-        # Convertir a float para cálculos
         num1 = float(n1)
         num2 = float(n2)
         res = 0
@@ -80,7 +79,7 @@ def resultado():
             res = num1 + num2
         elif operacion == "resta":
             res = num1 - num2
-        elif operacion == "multi": # Debe coincidir con el value del HTML
+        elif operacion == "multi": 
             res = num1 * num2
         elif operacion == "division":
             if num2 != 0:
@@ -88,9 +87,25 @@ def resultado():
             else:
                 res = "Error: División por cero"
 
-        return f"El resultado de la {operacion} es: {res}"
+        return render_template('operasBas.html', res=res)
     
+@app.route("/alumnos", methods=["GET", "POST"])
+def alumnos():
+    return render_template('alumnos.html')
 
+
+@app.route("/distancia", methods=["GET", "POST"])
+def distancia():
+    distancia=""
+    
+    if request.method == "POST":
+       x1 = float(request.form.get("x1"))
+       y1 = float(request.form.get("y1"))
+       x2 = float(request.form.get("x2"))
+       y2 = float(request.form.get("y2"))
+       
+       distancia = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+       return render_template('distancia.html', distancia=distancia)
 
 
 if __name__  == '__main__':
